@@ -1,0 +1,62 @@
+body {
+  background-color: #5fa078;
+  font-family: monospace;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+}
+
+#container {
+  padding: 20px;
+  border: 2px royalblue;
+  border-radius: 5px;
+}
+
+button {
+  position: absolute;
+  left: 50%;
+  top: 20.5%;
+  transform: translate(-50%, -50%);
+  display: block;
+  padding: 8px 20px;
+  letter-spacing: 4px;
+  font-weight: 600;
+  color: white;
+  font-size: medium;
+  background-color: rgb(26, 183, 26);
+  border-radius: 5px;
+  border: none;
+  box-shadow: 3px 2px forestgreen;
+  cursor: pointer;
+  transition: 1.2s;
+}
+
+button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: 1.3s;
+}
+
+#info {
+  text-align: center;
+}
+
+#gameArea {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 50vh;
+  border-radius: 10px;
+  background-color: rgb(36, 157, 95);
+}
+
+.circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}

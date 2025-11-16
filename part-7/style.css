@@ -1,0 +1,88 @@
+body {
+  background-color: rgb(148, 204, 239);
+  font-family: monospace;
+}
+h1 {
+  text-align: center;
+  font-weight: 600;
+  color: dimgray;
+}
+
+#info {
+  text-align: center;
+  margin: 30px;
+  font-size: large;
+}
+
+#main-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 60vh;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  background-color: aliceblue;
+  display: flex;
+}
+
+#gameArea {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  background-color: beige;
+}
+
+#info-container {
+  position: relative;
+  margin-left: 82%;
+  display: flex;
+  flex-direction: column;
+}
+
+#score,
+#timer,
+#lives {
+  font-size: large;
+}
+
+#startBtn {
+  display: block;
+  margin: 50px auto;
+  padding: 5px;
+  width: 15vw;
+  letter-spacing: 5px;
+  border-radius: 10%;
+  border: none;
+  background-color: rgb(34, 160, 137);
+  font-size: medium;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: 1.2s;
+}
+
+#startBtn:hover {
+  transform: scale(1.1);
+  transition: 1.2s;
+}
+
+.ball {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: aqua;
+}
+
+#basket {
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  background: gold;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}

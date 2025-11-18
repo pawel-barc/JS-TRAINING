@@ -68,6 +68,11 @@ h1 {
   transition: 1.2s;
 }
 
+#startBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .ball {
   position: absolute;
   width: 20px;

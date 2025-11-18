@@ -75,10 +75,17 @@ h1 {
 
 .ball {
   position: absolute;
-  width: 20px;
-  height: 20px;
   border-radius: 50%;
-  background-color: aqua;
+  animation: fall linear;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100vh);
+  }
 }
 
 #basket {
@@ -90,4 +97,57 @@ h1 {
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
+}
+#basket.catch {
+  animation: basketCatch 0.2s ease;
+}
+
+@keyframes basketCatch {
+  0% {
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(1.2);
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+#gameOverScreen {
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-size: 32px;
+  text-align: center;
+}
+
+#restartBtn {
+  display: block;
+  margin: 50px auto;
+  padding: 5px;
+  width: 15vw;
+  letter-spacing: 5px;
+  border-radius: 10%;
+  border: none;
+  background: gold;
+  font-size: medium;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: 1.2s;
+}
+
+#restartBtn:hover {
+  transform: scale(1.1);
+  transition: 1.2s;
 }

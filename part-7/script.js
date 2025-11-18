@@ -7,6 +7,16 @@ const livesDisplay = document.getElementById("lives");
 const gameArea = document.getElementById("gameArea");
 const basket = document.getElementById("basket");
 const startButton = document.getElementById("startBtn");
+const gameOverScreen = document.getElementById("gameOverScreen");
+const restartButton = document.getElementById("restartBtn");
+
+// Sounds
+const soundCatch = new Audio("sounds/point.wav");
+const soundLose = new Audio("sounds/failure.wav");
+const soundGameOver = new Audio("sounds/game-over.wav");
+const soundRain = new Audio("sounds/rain-and-thunder-storm.wav");
+const soundBestScore = new Audio("sounds/applause.wav");
+const soundStart = new Audio("sounds/countdown.wav");
 
 // Game state variables
 let timeLeft = 60;
@@ -19,6 +29,7 @@ let basketX = 0;
 let basketSpeed = 15;
 let basketWidth = 80;
 let ballFallingInterval = null;
+let sound = null;
 
 // Best score loaded from local storage
 let bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
@@ -79,7 +90,6 @@ function fallingBalls() {
   const ball = document.createElement("div");
   ball.classList.add("ball");
   const areaWidth = gameArea.clientWidth - ballSize;
-  const areaHeight = gameArea.clientHeight - ballSize;
   ball.style.width = ballSize + "px";
   ball.style.height = ballSize + "px";
   ball.style.background = randomColors();
@@ -103,13 +113,20 @@ function fallingBalls() {
     if (checkCollision(ball, basket)) {
       score++;
       scoreDisplay.textContent = `Score: ${score}`;
+      basket.classList.add("catch");
+      soundCatch.currentTime = 0;
+      soundCatch.play();
+
+      setTimeout(() => basket.classList.remove("catch"), 200);
       ball.remove();
       clearInterval(way);
       return;
     }
 
-    // LBall hits the ground, lose one life
+    // Ball hits the ground, lose one life
     if (y > gameArea.clientHeight - ballSize) {
+      soundLose.currentTime = 0;
+      soundLose.play();
       lives--;
       livesDisplay.textContent = `Lives: ${lives}`;
       ball.remove();
@@ -137,10 +154,13 @@ function checkCollision(ball, basket) {
 // Main function, start the game, resets values, initializes timers and ball spawner
 function startGame() {
   if (gameActive) return;
+  gameOverScreen.style.display = "none";
+  soundBestScore.pause();
+  soundGameOver.pause();
+  soundLose.pause();
   gameArea.innerHTML = "";
   gameArea.appendChild(basket);
   initBasketPosition();
-
   startButton.disabled = true;
   level = 1;
   timeLeft = 60;
@@ -149,29 +169,38 @@ function startGame() {
   scoreDisplay.textContent = `Score: ${score}`;
   timerDisplay.textContent = `Time left: ${timeLeft}`;
   livesDisplay.textContent = `Lives: ${lives}`;
-  gameActive = true;
+  soundStart.currentTime = 0;
+  soundStart.play();
+  setTimeout(() => {
+    gameActive = true;
+    soundRain.currentTime = 0;
+    soundRain.loop = true;
+    soundRain.play();
 
-  // Creates a falling ball every 1.2 sec
-  ballFallingInterval = setInterval(fallingBalls, 1200);
+    // Creates a falling ball every 1.2 sec
+    ballFallingInterval = setInterval(fallingBalls, 1200);
 
-  // Countdown timer and level progression
-  timeCounter = setInterval(() => {
-    if (!gameActive) {
-      clearInterval(timeCounter);
-      return;
-    }
-    timeLeft--;
-    timerDisplay.textContent = `Time left: ${timeLeft}s`;
-    if (timeLeft === 40) {
-      level = 2;
-    }
-    if (timeLeft === 20) {
-      level = 3;
-    }
-    if (timeLeft === 0) {
-      endGame();
-    }
-  }, 1000);
+    // Countdown timer and level progression
+    timeCounter = setInterval(() => {
+      if (!gameActive) {
+        clearInterval(timeCounter);
+        return;
+      }
+      timeLeft--;
+      timerDisplay.textContent = `Time left: ${timeLeft}s`;
+      if (timeLeft === 40) {
+        level = 2;
+        gameArea.style.background = "#ffeecb";
+      }
+      if (timeLeft === 20) {
+        level = 3;
+        gameArea.style.background = "#ffc4c4";
+      }
+      if (timeLeft === 0) {
+        endGame();
+      }
+    }, 1000);
+  }, 3000);
 }
 
 // Stops the game, saves best score, clears intervals and game area
@@ -180,11 +209,17 @@ function endGame() {
   startButton.disabled = false;
   clearInterval(timeCounter);
   clearInterval(ballFallingInterval);
+  soundRain.pause();
   gameArea.innerHTML = "";
+  soundGameOver.play();
   if (score > bestScore) {
     bestScore = score;
     localStorage.setItem("bestScore", bestScore);
+    soundBestScore.currentTime = 0;
+    soundBestScore.play();
   }
+  gameOverScreen.style.display = "flex";
 }
 
 startButton.addEventListener("click", startGame);
+restartButton.addEventListener("click", startGame);

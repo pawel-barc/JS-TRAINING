@@ -7,21 +7,27 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Fill the basket!</h1>
-    <p id="info">Use narrows right and left to move the basket</p>
+    <main>
+      <h1>Fill the basket!</h1>
+      <p id="info">Use narrows right and left to move the basket</p>
 
-    <div id="main-container">
-      <div id="gameArea">
-        <div id="basket"></div>
+      <div id="main-container">
+        <div id="gameArea">
+          <div id="basket"></div>
+        </div>
+        <div id="info-container">
+          <p id="bestScore"></p>
+          <p id="score">Score:</p>
+          <p id="timer">Time left:</p>
+          <p id="lives">Lives:</p>
+          <button id="startBtn">Start</button>
+        </div>
+        <div id="gameOverScreen">
+          <div id="gameOverText">GAME OVER</div>
+          <button id="restartBtn">RESTART</button>
+        </div>
       </div>
-      <div id="info-container">
-        <p id="bestScore"></p>
-        <p id="score">Score:</p>
-        <p id="timer">Time left:</p>
-        <p id="lives">Lives:</p>
-        <button id="startBtn">Start</button>
-      </div>
-    </div>
+    </main>
 
     <script src="script.js"></script>
   </body>

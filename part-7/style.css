@@ -78,7 +78,7 @@ h1 {
   border-radius: 50%;
   animation: fall linear;
 }
-
+/*BASKET EFFECTS*/
 @keyframes fall {
   from {
     transform: translateY(0);
@@ -114,6 +114,7 @@ h1 {
   }
 }
 
+/*GAME OVER SCREEN*/
 #gameOverScreen {
   position: absolute;
   z-index: 9999;
@@ -135,7 +136,7 @@ h1 {
   display: block;
   margin: 50px auto;
   padding: 5px;
-  width: 15vw;
+  width: 20vw;
   letter-spacing: 5px;
   border-radius: 10%;
   border: none;
@@ -150,4 +151,47 @@ h1 {
 #restartBtn:hover {
   transform: scale(1.1);
   transition: 1.2s;
+}
+
+/* SPARK EFFECTS */
+.spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: gold;
+  pointer-events: none;
+  animation: spark-move 500ms linear forwards;
+}
+
+@keyframes spark-move {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+}
+
+/*RAINFALL EFFECT*/
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: rgba(27, 24, 24, 0.7);
+  animation: rain-fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes rain-fall {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(600px);
+    opacity: 0;
+  }
 }

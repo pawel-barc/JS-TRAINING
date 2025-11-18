@@ -30,6 +30,7 @@ let basketSpeed = 15;
 let basketWidth = 80;
 let ballFallingInterval = null;
 let sound = null;
+let rainInterval = null;
 
 // Best score loaded from local storage
 let bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
@@ -111,6 +112,12 @@ function fallingBalls() {
 
     // Collision detection (ball caught by basket)
     if (checkCollision(ball, basket)) {
+      const basketRect = basket.getBoundingClientRect();
+      const areaRect = gameArea.getBoundingClientRect();
+      createSparks(
+        basketRect.left - areaRect.left + basketRect.width / 2,
+        basketRect.top - areaRect.top
+      );
       score++;
       scoreDisplay.textContent = `Score: ${score}`;
       basket.classList.add("catch");
@@ -149,6 +156,42 @@ function checkCollision(ball, basket) {
     ballRect.right < basketRect.left ||
     ballRect.left > basketRect.right
   );
+}
+
+// Function creates sparks, when ball touches the basket
+function createSparks(x, y) {
+  for (let i = 0; i <= 12; i++) {
+    const spark = document.createElement("div");
+    spark.classList.add("spark");
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 30 + Math.random() * 20;
+
+    spark.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
+    spark.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
+
+    spark.style.left = x + "px";
+    spark.style.top = y + "px";
+
+    gameArea.appendChild(spark);
+    setTimeout(() => spark.remove(), 500);
+  }
+}
+// Rain fall imitation
+function startRainFall() {
+  rainInterval = setInterval(() => {
+    const drop = document.createElement("div");
+    drop.classList.add("rain-drop");
+    drop.style.left = Math.random() * gameArea.clientWidth + "px";
+    drop.style.top = "-5px";
+    drop.style.animationDuration = 0.5 + Math.random() * 0.6 + "s";
+    gameArea.appendChild(drop);
+    setTimeout(() => drop.remove(), 1000);
+  }, 50);
+}
+
+function stopRainFall() {
+  clearInterval(rainInterval);
 }
 
 // Main function, start the game, resets values, initializes timers and ball spawner
@@ -191,6 +234,7 @@ function startGame() {
       if (timeLeft === 40) {
         level = 2;
         gameArea.style.background = "#ffeecb";
+        startRainFall();
       }
       if (timeLeft === 20) {
         level = 3;
@@ -210,6 +254,7 @@ function endGame() {
   clearInterval(timeCounter);
   clearInterval(ballFallingInterval);
   soundRain.pause();
+  stopRainFall();
   gameArea.innerHTML = "";
   soundGameOver.play();
   if (score > bestScore) {

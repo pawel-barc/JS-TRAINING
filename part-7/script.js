@@ -17,6 +17,7 @@ const soundGameOver = new Audio("sounds/game-over.wav");
 const soundRain = new Audio("sounds/rain-and-thunder-storm.wav");
 const soundBestScore = new Audio("sounds/applause.wav");
 const soundStart = new Audio("sounds/countdown.wav");
+const soundThunder = new Audio("sounds/thunder.wav");
 
 // Game state variables
 let timeLeft = 60;
@@ -47,15 +48,15 @@ function randomColors() {
 // Returns ball size and falling speed depending on the current level
 function gameLevel() {
   if (level === 1) {
-    return { ballSize: 20, ballSpeed: 3 };
+    return { ballSize: 20, ballSpeed: 2 };
   }
   if (level === 2) {
-    return { ballSize: 15, ballSpeed: 3 };
+    return { ballSize: 15, ballSpeed: 2 };
   }
   if (level === 3) {
-    return { ballSize: 10, ballSpeed: 2 };
+    return { ballSize: 10, ballSpeed: 3 };
   }
-  return { ballSize: 20, ballSpeed: 3 };
+  return { ballSize: 20, ballSpeed: 2 };
 }
 
 // Sets the basket to the initial centered bottom position
@@ -194,6 +195,28 @@ function stopRainFall() {
   clearInterval(rainInterval);
 }
 
+// Storm flash imitation
+function stormFlash() {
+  if (!gameActive) return;
+  const flash = document.createElement("flash");
+  flash.classList.add("storm-flash");
+  gameArea.appendChild(flash);
+  setTimeout(() => flash.remove(), 300);
+}
+
+function startStormFlashes() {
+  const randomTime = Math.random() * 4000 + 2000;
+
+  setTimeout(() => {
+    if (gameActive) {
+      stormFlash();
+      soundThunder.currentTime = 0;
+      soundThunder.play();
+      startStormFlashes();
+    }
+  }, randomTime);
+}
+
 // Main function, start the game, resets values, initializes timers and ball spawner
 function startGame() {
   if (gameActive) return;
@@ -233,12 +256,19 @@ function startGame() {
       timerDisplay.textContent = `Time left: ${timeLeft}s`;
       if (timeLeft === 40) {
         level = 2;
-        gameArea.style.background = "#ffeecb";
+        gameArea.style.background = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+          url("images/background.jpg")`;
+        gameArea.style.backgroundSize = "cover";
+        gameArea.style.backgroundPosition = "center";
         startRainFall();
       }
       if (timeLeft === 20) {
         level = 3;
-        gameArea.style.background = "#ffc4c4";
+        gameArea.style.background = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+          url("images/background.jpg")`;
+        gameArea.style.backgroundSize = "cover";
+        gameArea.style.backgroundPosition = "center";
+        startStormFlashes();
       }
       if (timeLeft === 0) {
         endGame();

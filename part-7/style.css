@@ -31,7 +31,10 @@ h1 {
   position: absolute;
   width: 80%;
   height: 100%;
-  background-color: beige;
+  background-image: url("images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  transition: background 1s ease-in-out;
 }
 
 #info-container {
@@ -180,7 +183,7 @@ h1 {
   position: absolute;
   width: 2px;
   height: 15px;
-  background: rgba(27, 24, 24, 0.7);
+  background: rgb(240, 240, 240);
   animation: rain-fall linear forwards;
   pointer-events: none;
 }
@@ -192,6 +195,37 @@ h1 {
   }
   to {
     transform: translateY(600px);
+    opacity: 0;
+  }
+}
+
+/*STORM FLASH EFFECT*/
+.storm-flash {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  animation: storm-flash 300ms forwards;
+}
+
+@keyframes storm-flash {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  40% {
+    opacity: 0.4;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  100% {
     opacity: 0;
   }
 }

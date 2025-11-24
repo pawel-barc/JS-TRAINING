@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Shooter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="hud">
+      <div id="hud-left">
+        <p id="score">Score:</p>
+        <p id="timeCounter">Time left:</p>
+      </div>
+      <div id="hud-center">
+        <button id="startBtn">Start game</button>
+      </div>
+      <div id="hud-right">
+        <p id="lives">Lives:</p>
+        <p id="level">Level:</p>
+      </div>
+      <p id="bestScore">Your best Score:</p>
+      <p id="powerTimeLeft"></p>
+    </header>
+    <h1>:=:=:=: SPACE--:::--SHOOTER :=:=:=:</h1>
+
+    <main>
+      <canvas id="gameCanvas" width="900" height="500"></canvas>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
